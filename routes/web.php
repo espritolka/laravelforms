@@ -19,9 +19,9 @@ Route::get('/logintest', ['as'=>'home', function(){
     return view('login');
 }]);
 
-// Route::post('/testik', 'UsersController@store');
+Route::post('/testik', 'UsersController@store');
 
-Route::resource('/testik', 'UsersController',['only' => ['index', 'store', 'show', 'destroy']]);
+// Route::resource('/testik', 'UsersController');
 
 
 
@@ -32,7 +32,7 @@ Route::get('/registertest', ['as'=>'home', function(){
 
 Route::get('admin', function () {
     return view('admin_template');
-});
+})->name('admin');
 
 Route::get('admin/blog', function () {
     return view('admin_blog');

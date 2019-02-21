@@ -59,7 +59,7 @@
                     <input type="text" class="form-control" placeholder="Логин" id="login">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
-                <div class="form-group has-feedback">
+                <div id="adderrorpass" class="form-group has-feedback">
                     <input type="password" class="form-control" placeholder="Пароль" id="password">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
@@ -78,7 +78,7 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-6">
-                        <a href="/logintest" onclick="form.reset()" id="register"
+                        <a href="#" id="register"
                             class="btn btn-primary btn-block btn-flat disabled">Зарегистрироваться</a>
                     </div>
                     <!-- /.col -->
@@ -104,6 +104,7 @@
         // });
         $("input").change(function() {
             // obj[this.id] = this.value;
+            $("#adderrorpass").removeClass("has-error");
             if (this.id != yes) {
                 obj[this.id] = this.value;
             }
@@ -151,26 +152,45 @@
             yes: false,
         };
         $("#register").on('click', function(e) {
-            $.ajax({
-                type: "POST",
-                data: {
-                    name: obj.name,
-                    surname: obj.surname,
-                    patronymic: obj.patronymic,
-                    snils: obj.snils,
-                    login: obj.login,
-                    password: obj.password,
-                },
-                url: '/testik/store',
-                success: function(data) {
-                    console.log(data);
-                    $('.results').html(data);
-                }
+             $.ajax({
+                    type: "POST",
+                    data: {
+                        name: obj.name,
+                        surname: obj.surname,
+                        patronymic: obj.patronymic,
+                        snils: obj.snils,
+                        login: obj.login,
+                        password: obj.password,
+                    },
+                    response: 'text',
+                    url: '/testik',
+                    success: function(data) {
 
-            });
+
+                        //      $('.results').html(data.statusText);
+                    },
+                    error: function(msg) {
+                        var l = msg.responseJSON;
+                        console.log(l)
+                        return l
+                    }
+
+                }).then((tt) => form.reset(), function(err) {
+                    alert(err.responseJSON.password);
+                    $("#adderrorpass").addClass("has-error");
+                })
+                //   .then(function(mes) { 
+                //   $("#adderrorpass").addClass("has-error");
+
+                //   }, (err)=>console.log("err"))
+                .then($("#adderrorpass").removeClass("has-error"))
+
+
+
+
         })
-
     });
+
     </script>
 </body>
 
