@@ -31,7 +31,7 @@ Route::get('/registertest', ['as'=>'home', function(){
 
 
 Route::get('admin', function () {
-    return view('admin_template');
+    return view('welcome');
 })->name('admin');
 
 Route::get('admin/blog', function () {

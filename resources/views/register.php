@@ -34,7 +34,6 @@
         <div class="register-logo">
             <a href="/login"><b>ЕСМУ</b> Регистрация</a>
         </div>
-
         <div class="register-box-body">
             <p class="login-box-msg">Регистрация нового пользователя</p>
 
@@ -152,7 +151,8 @@
             yes: false,
         };
         $("#register").on('click', function(e) {
-             $.ajax({
+            $(".text-danger").remove();
+            $.ajax({
                     type: "POST",
                     data: {
                         name: obj.name,
@@ -165,8 +165,6 @@
                     response: 'text',
                     url: '/testik',
                     success: function(data) {
-
-
                         //      $('.results').html(data.statusText);
                     },
                     error: function(msg) {
@@ -176,8 +174,22 @@
                     }
 
                 }).then((tt) => form.reset(), function(err) {
-                    alert(err.responseJSON.password);
-                    $("#adderrorpass").addClass("has-error");
+                    var error = err.responseJSON
+                    //   console.log(err.responseJSON)
+                    //   var arr = Object.keys(error)
+                    var errorlist = Object.values(error);
+                    //  var errorlist = arr.map((a) => a error.a[0]);
+                    // var texterror = errorlist.join(" \n");
+                    // var listItems =  texterror.map((a)=>{
+                    //     $('<p class="text-danger">' + a + '</p>')
+                    // });
+                    console.log(errorlist)
+                    $('#form').append(
+                        errorlist.map((a) => '<p class="text-danger">' + a + '</p>')
+                    );
+
+                    //     $("#adderrorpass").addClass("has-error");
+
                 })
                 //   .then(function(mes) { 
                 //   $("#adderrorpass").addClass("has-error");
@@ -185,12 +197,8 @@
                 //   }, (err)=>console.log("err"))
                 .then($("#adderrorpass").removeClass("has-error"))
 
-
-
-
         })
     });
-
     </script>
 </body>
 
